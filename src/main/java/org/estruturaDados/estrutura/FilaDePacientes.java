@@ -2,32 +2,42 @@ package org.estruturaDados.estrutura;
 import org.estruturaDados.model.Paciente;
 
 import java.util.LinkedList;
-import java.util.Queue;
-import java.util.NoSuchElementException;
 
 public class FilaDePacientes {
-    private LinkedList<Paciente> fila;
+    private final LinkedList<Paciente> fila;
 
     public FilaDePacientes() {
         this.fila = new LinkedList<>();
     }
 
-    public void enqueueue(Paciente paciente) {
+    // Adiciona paciente ao final da fila
+    public void adicionarPaciente(Paciente paciente) {
         fila.addLast(paciente);
     }
 
-    public Paciente dequeue() {
-        if (fila.isEmpty()) {
-            throw new NoSuchElementException("A fila está vazia.");
-        }
-        return fila.removeFirst();
+    // Remove e retorna o próximo paciente (ou null se vazia)
+    public Paciente chamarProximoPaciente() {
+        return fila.isEmpty() ? null : fila.removeFirst();
     }
 
-    public Paciente peek (){
+    // Retorna o próximo paciente sem remover (ou null se vazia)
+    public Paciente proximoPaciente() {
+        return fila.peekFirst();
+    }
+
+    // Exibe a fila no console
+    public void exibirFila() {
         if (fila.isEmpty()) {
-            throw new NoSuchElementException("A fila está vazia não há pacientes.");
+            System.out.println("A fila está vazia.");
+            return;
         }
-        return fila.getFirst();
+        System.out.println("Estado da fila:");
+        int i = 1;
+        for (Paciente p : fila) {
+            String prioridade = (p != null && p.temPrioridade()) ? "SIM" : "NÃO";
+            System.out.println(i + ". " + p.getNome() + " (Idade: " + p.getIdade() + ", Prioridade: " + prioridade + ")");
+            i++;
+        }
     }
 
     public boolean isEmpty() {
